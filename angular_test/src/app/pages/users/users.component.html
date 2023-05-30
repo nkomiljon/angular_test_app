@@ -1,4 +1,11 @@
 <div class="container">
+  <div class="row flex-row justify-content-end col-auto m-2 p-2">
+      <div class="col-2">
+       <app-create-userbutton
+       (data)="create($event)">
+       </app-create-userbutton>
+      </div>
+  </div>
   <table class="table table-bordered">
     <thead>
     <tr>
@@ -17,15 +24,18 @@
         <td>{{user.name}}</td>
         <td>{{user.username}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.address.street}}</td>
-        <td><button type="button" class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button></td>
-        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" (click)="openModal(user.id)">Update</button></td>
+        <td>{{user.address!.street}},{{user.address!.suite}}</td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)">
+            Delete
+          </button>
+        </td>
+        <td>
+          <app-update-userbutton [data]="user"
+                                 (sendData)="update($event)">
+          </app-update-userbutton>
+        </td>
       </tr>
     </tbody>
   </table>
-
 </div>
-<app-modal [openModal]="open"
-           (userData)="updateUser($event)"
-           (close)="closeModal($event)">
-</app-modal>

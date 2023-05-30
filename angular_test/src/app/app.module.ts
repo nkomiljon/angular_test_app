@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {PagesModule} from "./pages/pages.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 /// link: localhost:4200/page/posts -> posts page
@@ -14,8 +15,7 @@ import {PagesModule} from "./pages/pages.module";
 const route: Routes = [
   {
     path: 'page',
-    // component: PagesComponent
-     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
   },
   {
     path: '**',
@@ -33,7 +33,9 @@ const route: Routes = [
         RouterOutlet,
         RouterModule.forRoot(route),
         HttpClientModule,
-        PagesModule
+        PagesModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

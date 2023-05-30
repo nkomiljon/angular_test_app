@@ -8,14 +8,16 @@ import {PostsModule} from "./posts/posts.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PostListComponent} from "./posts/posts-list/post-list.component";
 import {PostDetailComponent} from "./posts/post-detail/post-detail.component";
-import {ModalComponent} from "../componets/modal/modal.component";
+import {CreateUserbuttonComponent} from "../componets/create-userbutton/create-userbutton.component";
+import {UpdateUserbuttonComponent} from "../componets/update-userbutton/update-userbutton.component";
 @NgModule({
   declarations: [
     PagesComponent,
     UsersComponent,
     PostListComponent,
     PostDetailComponent,
-    ModalComponent
+    CreateUserbuttonComponent,
+    UpdateUserbuttonComponent
   ],
   imports: [
     CommonModule,

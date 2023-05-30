@@ -4,6 +4,7 @@ import {combineLatest, Subject, Subscription, switchMap, takeUntil} from "rxjs";
 import {PostsService} from "../../../core/services/posts.service";
 import {IPost} from "../../../core/interfaces/IPost";
 import {IComment} from "../../../core/interfaces/IComment";
+import {IUser} from "../../../core/interfaces/IUser";
 
 @Component({
   selector: 'app-post-detail',
@@ -13,9 +14,11 @@ import {IComment} from "../../../core/interfaces/IComment";
 export class PostDetailComponent implements OnInit, OnDestroy {
 
   private subject$ = new Subject();
-  public post!: IPost;
-  public comment!: IComment;
-  constructor(private route: ActivatedRoute, private postService: PostsService) {
+  public data: any;
+  public comments: IComment[];
+  constructor(private route: ActivatedRoute, private postService: PostsService)
+  {
+    this.comments = [];
   }
 
   ngOnInit() {
@@ -29,14 +32,17 @@ export class PostDetailComponent implements OnInit, OnDestroy {
           let id = Number(params.get('id'));
           return combineLatest([
             this.postService.getPostById(id),
-            this.postService.getCommentById(id)
+            this.postService.getAllUser(),
+            this.postService.getAllComment()
           ]);
         }),
         takeUntil(this.subject$)
       )
-      .subscribe(([post, comment]) => {
-        this.post = post;
-        this.comment = comment;
+      .subscribe(([post, users, comments]) => {
+        const user = users.find(user =>  user.id == post.userId);
+        this.data = {"post": post, "user": user};
+        this.comments = comments.filter(comment =>  comment.postId == post.id);
+        console.log(this.comments)
       })
   }
 

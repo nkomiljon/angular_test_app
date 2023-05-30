@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UsersService} from "../../core/services/users.service";
 import { IUser } from "../../core/interfaces/IUser";
 import { Subject, takeUntil, tap} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -10,56 +11,59 @@ import { Subject, takeUntil, tap} from "rxjs";
 })
 export class UsersComponent implements OnInit, OnDestroy {
   subject$ = new Subject();
-  private id!: number;
-  public users: IUser[];
-  public open: boolean = false;
+
+  public users!: IUser[];
+
 
   constructor(private userService: UsersService) {
     this.users = [];
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUsers();
   }
-  private getUsers() {
+  private getUsers(): void {
     this.userService.getAllUsers()
       .pipe(
         takeUntil(this.subject$)
       )
       .subscribe((res: IUser[]) => {
         this.users = res;
+        console.log(this.users)
       })
   }
-  private updateUserData(id: number, data: any) {
+
+  // delete user
+  public deleteUser(id: number): void  {
+     const check =  window.confirm("Do you really want to delete this user?");
+     check ? this.users = this.users.filter(item => item.id !== id) : false;
+  }
+
+  public create(data: any): void {
+   this.users.push(data);
+  }
+
+  public update(data: any): void {
+    console.log(data)
     this.users.forEach((item) => {
-      if (item.id == id) {
-          item.name = data.value.name,
-          item.username = data.value.username,
-          item.email = data.value.email,
-          item.address.street = data.value.address
+      if (item.id == data.id) {
+        item.name = data.name,
+        item.username = data.username,
+        item.email = data.email,
+        item.address.street = data.address.street,
+        item.address.suite = data.address.suite
       }
     })
   }
-  public deleteUser(id: number): void {
-    this.users = this.users.filter(item => item.id !== id);
+
+  public send(): void {
+
   }
-  public openModal(id: number){
-      this.open = true;
-      this.id = id;
-  }
-  public updateUser(userData: any) {
-    this.userService.createUser(userData.value)
-      .pipe(takeUntil(this.subject$))
-      .subscribe((res) => {
-        if (res) {
-          this.updateUserData(this.id, userData);
-           this.open = false;
-        }
-      })
-  }
-  public closeModal(data: any) {
-    this.open = data;
-  }
+
+
+ /* public closeUpdateModal(close: any): void {
+    this.updateModalOpen = close;
+  }*/
   ngOnDestroy(): void {
     this.subject$.next(true);
     this.subject$.unsubscribe();

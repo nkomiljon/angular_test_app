@@ -1,5 +1,6 @@
 <div class="container">
   <ul *ngFor="let post of posts">
+    <span>{{post.name}}</span>
     <li>
       <h1>
         <a class="text-black text-uppercase" routerLink="{{post.id}}">{{post.title}}</a>

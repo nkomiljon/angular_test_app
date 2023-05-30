@@ -1,10 +1,17 @@
+<button type="button"
+        class="btn btn-success"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+        (click)="update()"
+>Update user</button>
+
 <!-- Modal -->
-<div id="exampleModalCenter" [class.show]="openModal" class="modal fade"  tabindex="-1"
-     role="dialog" aria-labelledby="exampleModalCenterTitle" [style]="openModal ? modalStyle : ''">
+<div id="exampleModalCenter" [class.show]="open" class="modal fade"  tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalCenterTitle" [style]="open ? modalStyle : ''">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Update user info</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">Create user</h5>
         <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="open" >×</span>
         </button>
@@ -23,16 +30,22 @@
             <label for="email">Email</label>
             <input class="form-control" id="email" formControlName="email" type="text">
           </div>
-          <div class="col-auto">
-            <label for="address">Address</label>
-            <input class="form-control" id="address" formControlName="address" type="text">
+          <div formGroupName="address">
+            <div class="col-auto">
+              <label for="street">Street</label>
+              <input class="form-control" id="street" formControlName="street" type="text">
+            </div>
+            <div class="col-auto">
+              <label for="suite">Suite</label>
+              <input class="form-control" id="suite" formControlName="suite" type="text">
+            </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button"
                 class="btn btn-primary"
-                (click)="updateUser()"
+                (click)="send()"
         >Save changes</button>
       </div>
     </div>

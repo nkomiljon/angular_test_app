@@ -1,0 +1,52 @@
+<button type="button"
+        class="btn btn-primary"
+        (click)="create()"
+>Create new User</button>
+
+<!-- Modal -->
+<div id="exampleModalCenter" [class.show]="open" class="modal fade"  tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalCenterTitle" [style]="open ? modalStyle : ''">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Create user</h5>
+        <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="open" >×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="modalForm">
+          <div class="col-auto">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" formControlName="name" type="text">
+          </div>
+          <div class="col-auto">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" formControlName="username" type="text">
+          </div>
+          <div class="col-auto">
+            <label for="email">Email</label>
+            <input class="form-control" id="email" formControlName="email" type="text">
+          </div>
+          <div formGroupName="address">
+            <div class="col-auto">
+              <label for="street">Street</label>
+              <input class="form-control" id="street" formControlName="street" type="text">
+            </div>
+            <div class="col-auto">
+              <label for="suite">Suite</label>
+              <input class="form-control" id="suite" formControlName="suite" type="text">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-primary"
+                (click)="send()"
+        >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
