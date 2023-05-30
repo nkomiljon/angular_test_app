@@ -8,12 +8,14 @@ import {PostsModule} from "./posts/posts.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PostListComponent} from "./posts/posts-list/post-list.component";
 import {PostDetailComponent} from "./posts/post-detail/post-detail.component";
+import {ModalComponent} from "../componets/modal/modal.component";
 @NgModule({
   declarations: [
     PagesComponent,
     UsersComponent,
     PostListComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

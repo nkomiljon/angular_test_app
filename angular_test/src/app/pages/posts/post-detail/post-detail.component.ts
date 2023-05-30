@@ -13,8 +13,8 @@ import {IComment} from "../../../core/interfaces/IComment";
 export class PostDetailComponent implements OnInit, OnDestroy {
 
   private subject$ = new Subject();
-  public post?: IPost;
-  public comment?: IComment;
+  public post!: IPost;
+  public comment!: IComment;
   constructor(private route: ActivatedRoute, private postService: PostsService) {
   }
 

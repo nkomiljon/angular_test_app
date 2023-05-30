@@ -1,0 +1,41 @@
+<!-- Modal -->
+<div id="exampleModalCenter" [class.show]="openModal" class="modal fade"  tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalCenterTitle" [style]="openModal ? modalStyle : ''">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Update user info</h5>
+        <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="open" >×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="modalForm">
+          <div class="col-auto">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" formControlName="name" type="text">
+          </div>
+          <div class="col-auto">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" formControlName="username" type="text">
+          </div>
+          <div class="col-auto">
+            <label for="email">Email</label>
+            <input class="form-control" id="email" formControlName="email" type="text">
+          </div>
+          <div class="col-auto">
+            <label for="address">Address</label>
+            <input class="form-control" id="address" formControlName="address" type="text">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-primary"
+                (click)="updateUser()"
+        >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->

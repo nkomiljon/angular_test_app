@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UsersService} from "../../core/services/users.service";
 import { IUser } from "../../core/interfaces/IUser";
 import { Subject, takeUntil, tap} from "rxjs";
-import { FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -12,16 +11,9 @@ import { FormControl, FormGroup} from "@angular/forms";
 export class UsersComponent implements OnInit, OnDestroy {
   subject$ = new Subject();
   private id!: number;
-
   public users: IUser[];
   public open: boolean = false;
-  public modalStyle = "display: block; padding-right: 17px; background-color: rgba(0, 0, 0, 0.7)";
-  public modalForm =  new FormGroup({
-    name: new FormControl(''),
-    username: new FormControl(''),
-    email: new FormControl(''),
-    address: new FormControl(''),
-  });
+
   constructor(private userService: UsersService) {
     this.users = [];
   }
@@ -41,10 +33,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   private updateUserData(id: number, data: any) {
     this.users.forEach((item) => {
       if (item.id == id) {
-          item.name = data.name,
-          item.username = data.username,
-          item.email = data.email,
-          item.address.street = data.address
+          item.name = data.value.name,
+          item.username = data.value.username,
+          item.email = data.value.email,
+          item.address.street = data.value.address
       }
     })
   }
@@ -55,19 +47,18 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.open = true;
       this.id = id;
   }
-  public updateUser() {
-    const data = this.modalForm?.value;
-    this.userService.createUser(data)
-      .pipe()
+  public updateUser(userData: any) {
+    this.userService.createUser(userData.value)
+      .pipe(takeUntil(this.subject$))
       .subscribe((res) => {
         if (res) {
-          this.updateUserData(this.id, data);
-          this.closeModal();
+          this.updateUserData(this.id, userData);
+           this.open = false;
         }
       })
   }
-  public closeModal(): void {
-    this.open = false;
+  public closeModal(data: any) {
+    this.open = data;
   }
   ngOnDestroy(): void {
     this.subject$.next(true);
