@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {UsersComponent} from "./users/users.component";
 import {PagesComponent} from "./pages.component";
 import {PostsListComponent} from "./posts/posts-list/posts-list.component";
+import {PostDetailComponent} from "./posts/post-detail/post-detail.component";
 const routes: Routes = [
   {
     path: 'page',
@@ -10,20 +11,28 @@ const routes: Routes = [
     children: [
       {
         path: 'posts',
-        //loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule)
         component: PostsListComponent
+      },
+      {
+        path: 'posts/:id',
+        component: PostDetailComponent
       },
       {
         path: 'users',
         component: UsersComponent
       },
       {
-        path: '*',
-        redirectTo: 'posts',
+        path: '',
+        redirectTo: '/page/posts',
         pathMatch: 'full'
       }
     ]
   },
+  {
+    path: '',
+    redirectTo: '/page/posts',
+    pathMatch: "full"
+  }
 ];
 
 @NgModule({

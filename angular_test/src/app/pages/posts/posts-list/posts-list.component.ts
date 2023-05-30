@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {IPosts} from "../../../core/interfaces/IPosts";
-import {PostsService} from "../../../core/service/posts.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {IPost} from "../../../core/interfaces/IPost";
+import {PostsService} from "../../../core/services/posts.service";
+import {Observable, Observer, Subject, Subscription, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-posts-list',
   templateUrl: './posts-list.component.html',
   styleUrls: ['./posts-list.component.css']
 })
-export class PostsListComponent implements OnInit {
-  public posts: IPosts[];
+export class PostsListComponent implements OnInit, OnDestroy {
+  private subscription!: Subscription;
+  public posts: IPost[];
 
   constructor(private postService: PostsService) {
     this.posts = [];
@@ -19,19 +21,13 @@ export class PostsListComponent implements OnInit {
   }
 
   private getPosts() {
-    this.postService.getAllPosts()
-      .pipe()
-      .subscribe((result: IPosts[]) => {
+    this.subscription = this.postService.getAllPost()
+      .subscribe((result: IPost[]) => {
         this.posts = result;
-        console.log(this.posts)
       })
   }
 
-  public getCommentById(id: number) {
-    this.postService.getCommentById()
-      .pipe()
-      .subscribe((res: any) => {
-        console.log(res)
-      })
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
