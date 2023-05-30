@@ -27,10 +27,6 @@ export class PostsService {
   getAllUser(): Observable<IUser[]> {
     return this._http.get<IUser[]>(this.users);
   }
-
-  getUserById(id: number): Observable<IUser> {
-    return this._http.get<IUser>(this.users +'/'+ id)
-  }
   getAllComment(): Observable<IComment[]> {
     return this._http.get<IComment[]>(this.comments);
   }

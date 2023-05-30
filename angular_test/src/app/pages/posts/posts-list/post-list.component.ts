@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IPost} from "../../../core/interfaces/IPost";
 import {PostsService} from "../../../core/services/posts.service";
-import {forkJoin, map, Observable, Observer, Subject, Subscription, switchMap, takeUntil} from "rxjs";
+import {forkJoin, Subject } from "rxjs";
 import {IUser} from "../../../core/interfaces/IUser";
 
 @Component({

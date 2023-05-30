@@ -1,10 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {combineLatest, Subject, Subscription, switchMap, takeUntil} from "rxjs";
+import {combineLatest, Subject, switchMap, takeUntil} from "rxjs";
 import {PostsService} from "../../../core/services/posts.service";
-import {IPost} from "../../../core/interfaces/IPost";
 import {IComment} from "../../../core/interfaces/IComment";
-import {IUser} from "../../../core/interfaces/IUser";
 
 @Component({
   selector: 'app-post-detail',
@@ -42,7 +40,6 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         const user = users.find(user =>  user.id == post.userId);
         this.data = {"post": post, "user": user};
         this.comments = comments.filter(comment =>  comment.postId == post.id);
-        console.log(this.comments)
       })
   }
 

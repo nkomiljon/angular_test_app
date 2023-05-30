@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UsersService} from "../../core/services/users.service";
 import { IUser } from "../../core/interfaces/IUser";
-import { Subject, takeUntil, tap} from "rxjs";
-import {FormControl, FormGroup} from "@angular/forms";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-users',
@@ -10,10 +9,9 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit, OnDestroy {
+
   subject$ = new Subject();
-
   public users!: IUser[];
-
 
   constructor(private userService: UsersService) {
     this.users = [];
@@ -29,11 +27,9 @@ export class UsersComponent implements OnInit, OnDestroy {
       )
       .subscribe((res: IUser[]) => {
         this.users = res;
-        console.log(this.users)
       })
   }
 
-  // delete user
   public deleteUser(id: number): void  {
      const check =  window.confirm("Do you really want to delete this user?");
      check ? this.users = this.users.filter(item => item.id !== id) : false;
@@ -56,14 +52,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
 
-  public send(): void {
-
-  }
-
-
- /* public closeUpdateModal(close: any): void {
-    this.updateModalOpen = close;
-  }*/
   ngOnDestroy(): void {
     this.subject$.next(true);
     this.subject$.unsubscribe();
