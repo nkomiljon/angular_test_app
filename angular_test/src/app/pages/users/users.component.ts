@@ -40,7 +40,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   public update(data: any): void {
-    console.log(data)
     this.users.forEach((item) => {
       if (item.id == data.id) {
         item.name = data.name,
