@@ -28,7 +28,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       .subscribe(([posts, users]) => {
         this.posts = posts.map((post: IPost) => {
           const user = users.find((user: IUser) => user.id == post.userId);
-          return { ...post, name: user?.name, username: user?.username, email: user?.email};
+          return { ...post, name: user?.name, username: user?.username, email: user?.email, company: {name: user?.company.name }};
         });
     });
   }

@@ -1,6 +1,6 @@
 <div class="container">
   <ul *ngFor="let post of posts">
-    <span>{{post.name}}</span>
+    <span>{{post.name}}</span> in <span>{{post.company?.name}}</span>
     <li>
       <h1>
         <a class="text-black text-uppercase" routerLink="{{post.id}}">{{post.title}}</a>
