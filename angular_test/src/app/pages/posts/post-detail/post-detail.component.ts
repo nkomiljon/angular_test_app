@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {combineLatest, Subscription, switchMap} from "rxjs";
+import {combineLatest, Subject, Subscription, switchMap, takeUntil} from "rxjs";
 import {PostsService} from "../../../core/services/posts.service";
 import {IPost} from "../../../core/interfaces/IPost";
 import {IComment} from "../../../core/interfaces/IComment";
@@ -12,11 +12,10 @@ import {IComment} from "../../../core/interfaces/IComment";
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
 
-  private subscription!: Subscription;
+  private subject$ = new Subject();
   public post?: IPost;
   public comment?: IComment;
-  constructor(private route: ActivatedRoute,
-              private postService: PostsService) {
+  constructor(private route: ActivatedRoute, private postService: PostsService) {
   }
 
   ngOnInit() {
@@ -24,7 +23,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   getPostIdFromRoute() {
-   this.subscription = this.route.paramMap
+    this.route.paramMap
       .pipe(
         switchMap((params) => {
           let id = Number(params.get('id'));
@@ -32,7 +31,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
             this.postService.getPostById(id),
             this.postService.getCommentById(id)
           ]);
-        })
+        }),
+        takeUntil(this.subject$)
       )
       .subscribe(([post, comment]) => {
         this.post = post;
@@ -41,6 +41,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subject$.next(true);
+    this.subject$.unsubscribe();
   }
 }

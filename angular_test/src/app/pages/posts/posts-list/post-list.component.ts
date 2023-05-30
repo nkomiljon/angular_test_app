@@ -4,12 +4,12 @@ import {PostsService} from "../../../core/services/posts.service";
 import {Observable, Observer, Subject, Subscription, takeUntil} from "rxjs";
 
 @Component({
-  selector: 'app-posts-list',
-  templateUrl: './posts-list.component.html',
-  styleUrls: ['./posts-list.component.css']
+  selector: 'app-post-list',
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.css']
 })
-export class PostsListComponent implements OnInit, OnDestroy {
-  private subscription!: Subscription;
+export class PostListComponent implements OnInit, OnDestroy {
+  private subject$ = new Subject();
   public posts: IPost[];
 
   constructor(private postService: PostsService) {
@@ -21,13 +21,17 @@ export class PostsListComponent implements OnInit, OnDestroy {
   }
 
   private getPosts() {
-    this.subscription = this.postService.getAllPost()
+    this.postService.getAllPost()
+      .pipe(
+        takeUntil(this.subject$)
+      )
       .subscribe((result: IPost[]) => {
         this.posts = result;
       })
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subject$.next(true);
+    this.subject$.unsubscribe();
   }
 }

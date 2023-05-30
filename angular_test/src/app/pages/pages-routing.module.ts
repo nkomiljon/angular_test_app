@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {UsersComponent} from "./users/users.component";
 import {PagesComponent} from "./pages.component";
-import {PostsListComponent} from "./posts/posts-list/posts-list.component";
+import {PostListComponent} from "./posts/posts-list/post-list.component";
 import {PostDetailComponent} from "./posts/post-detail/post-detail.component";
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: 'posts',
-        component: PostsListComponent
+        component: PostListComponent
       },
       {
         path: 'posts/:id',

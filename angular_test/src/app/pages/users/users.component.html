@@ -19,9 +19,50 @@
         <td>{{user.email}}</td>
         <td>{{user.address.street}}</td>
         <td><button type="button" class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button></td>
-        <td><button type="button" class="btn btn-success">Update</button></td>
+        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" (click)="openModal(user.id)">Update</button></td>
       </tr>
     </tbody>
   </table>
 
 </div>
+<!-- Modal -->
+<div id="exampleModalCenter" [class.show]="open" class="modal fade"  tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalCenterTitle" [style]="open ? modalStyle : ''">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="open" >×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <form [formGroup]="modalForm">
+              <div class="col-auto">
+                <label for="name">Name</label>
+                <input class="form-control" id="name" formControlName="name" type="text">
+              </div>
+              <div class="col-auto">
+                <label for="username">Username</label>
+                <input class="form-control" id="username" formControlName="username" type="text">
+              </div>
+              <div class="col-auto">
+                <label for="email">Email</label>
+                <input class="form-control" id="email" formControlName="email" type="text">
+              </div>
+              <div class="col-auto">
+                <label for="address">Address</label>
+                <input class="form-control" id="address" formControlName="address" type="text">
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-primary"
+                (click)="updateUser()"
+        >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->

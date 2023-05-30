@@ -9,7 +9,6 @@ import {IComment} from "../interfaces/IComment";
 })
 export class PostsService {
 
-  private url: string = 'https://jsonplaceholder.typicode.com/';
   private posts: string = 'https://jsonplaceholder.typicode.com/posts';
   private comments: string = 'https://jsonplaceholder.typicode.com/comments';
 
